@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naufal Fawwaz Firdausi - 2403010190 - Teknik Informatika</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    
+    body {
+      min-height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), 
+                  url('https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=2090') center/cover no-repeat fixed;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    header {
+      text-align: center;
+      padding: 30px 20px;
+      background: rgba(255, 102, 0, 0.15);
+      border: 2px solid #FF6600;
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: #FF6600;
+      text-shadow: 2px 2px 4px #000;
+    }
+    
+    header p { font-size: 1.1rem; margin-top: 8px; opacity: 0.9; }
+
+    .giannis-card {
+      display: flex;
+      gap: 20px;
+      background: rgba(0, 50, 20, 0.6);
+      border: 2px solid #00471B;
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 30px;
+      backdrop-filter: blur(10px);
+      align-items: center;
+    }
+
+    .giannis-card img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 3px solid #EEE1C6;
+      object-fit: cover;
+    }
+
+    .quote h2 { color: #EEE1C6; margin-bottom: 10px; }
+    .quote p { font-size: 1.2rem; font-style: italic; line-height: 1.5; }
+    .quote span { display: block; margin-top: 10px; color: #FF6600; font-weight: bold; }
+
+    .upload-area {
+      border: 3px dashed #FF6600;
+      border-radius: 16px;
+      padding: 40px 20px;
+      text-align: center;
+      background: rgba(0,0,0,0.4);
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 30px;
+    }
+
+    .upload-area:hover { background: rgba(255, 102, 0, 0.1); }
+    .upload-area.dragover { background: rgba(255, 102, 0, 0.2); border-color: #fff; }
+    #fileInput { display: none; }
+
+    .file-list {
+      background: rgba(0,0,0,0.5);
+      border-radius: 16px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .file-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .file-item:last-child { border-bottom: none; }
+    .file-name { flex: 1; }
+    .file-size { opacity: 0.7; margin: 0 15px; }
+    .btn {
+      background: #FF6600;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn:hover { background: #e55a00; }
+    .btn-delete { background: #c00; }
+    .btn-delete:hover { background: #a00; }
+
+    @media (max-width: 600px) {
+      .giannis-card { flex-direction: column; text-align: center; }
+      header h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>NAUFAL FAWWAZ FIRDAUSI</h1>
+      <p>NIM: 2403010190 | Teknik Informatika</p>
+    </header>
+
+    <div class="giannis-card">
+      <img src="https://cdn.nba.com/headshots/nba/latest/1040x760/203507.png" alt="Giannis Antetokounmpo">
+      <div class="quote">
+        <h2>Giannis Antetokounmpo #34</h2>
+        <p>"I don't have to be the best player. I just have to be better than I was yesterday."</p>
+        <span>- The Greek Freak</span>
+      </div>
+    </div>
+
+    <div class="upload-area" id="uploadArea">
+      <h2>🏀 Upload File Kamu Di Sini</h2>
+      <p>Drag & drop file atau klik untuk pilih file</p>
+      <input type="file" id="fileInput" multiple>
+    </div>
+
+    <div class="file-list">
+      <h2>📁 File Tersimpan</h2>
+      <div id="fileListContainer">
+        <p style="opacity: 0.7; text-align: center; padding: 20px;">Belum ada file yang diupload</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const fileListContainer = document.getElementById('fileListContainer');
+    let files = JSON.parse(localStorage.getItem('naufalFiles')) || [];
+
+    function renderFiles() {
+      if (files.length === 0) {
+        fileListContainer.innerHTML = '<p style="opacity: 0.7; text-align: center; padding: 20px;">Belum ada file yang diupload</p>';
+        return;
+      }
+      
+      fileListContainer.innerHTML = files.map((file, index) => `
+        <div class="file-item">
+          <span class="file-name">📄 ${file.name}</span>
+          <span class="file-size">${formatSize(file.size)}</span>
+          <button class="btn btn-delete" onclick="deleteFile(${index})">Hapus</button>
+        </div>
+      `).join('');
+    }
+
+    function formatSize(bytes) {
+      if(bytes < 1024) return bytes + ' B';
+      if(bytes < 1048576) return (bytes/1024).toFixed(1) + ' KB';
+      return (bytes/1048576).toFixed(1) + ' MB';
+    }
+
+    function saveFiles() {
+      localStorage.setItem('naufalFiles', JSON.stringify(files));
+      renderFiles();
+    }
+
+    function handleFiles(fileList) {
+      for (let file of fileList) {
+        files.push({ name: file.name, size: file.size });
+      }
+      saveFiles();
+    }
+
+    function deleteFile(index) {
+      files.splice(index, 1);
+      saveFiles();
+    }
+
+    uploadArea.addEventListener('click', () => fileInput.click());
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+    uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+
+    renderFiles();
+  </script>
+</body>
+</html>
