@@ -1,7 +1,13 @@
 const express = require("express");
 const multer = require("multer");
+const fs = require("fs");
 
 const app = express();
+
+// ================== FIX FOLDER UPLOADS ==================
+if (!fs.existsSync("uploads")) {
+  fs.mkdirSync("uploads");
+}
 
 // ================== UPLOAD CONFIG ==================
 const storage = multer.diskStorage({
@@ -19,7 +25,6 @@ app.use(express.static("uploads"));
 // ================== HALAMAN UTAMA ==================
 app.get("/", (req, res) => {
 
-  // sementara kosong (tanpa database)
   let list = "";
 
   res.send(`
@@ -127,11 +132,10 @@ app.get("/", (req, res) => {
 
 // ================== UPLOAD ==================
 app.post("/upload", upload.single("file"), (req, res) => {
-  // sementara belum pakai database
   res.redirect("/");
 });
 
-// ================== PORT ==================
+// ================== PORT (WAJIB UNTUK RAILWAY) ==================
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
