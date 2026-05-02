@@ -5,13 +5,13 @@ const path = require("path");
 
 const app = express();
 
-// 🔥 pastikan folder uploads ada (penting buat Railway)
-const uploadDir = "uploads";
+// 🔥 amanin folder uploads
+const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
+  fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// setup multer
+// multer
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, uploadDir);
@@ -23,14 +23,19 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// middleware
 app.use(express.static(__dirname));
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static(uploadDir));
 app.use(express.urlencoded({ extended: true }));
 
-// 🔥 ROUTE UTAMA (biar Railway nggak error)
+// 🔥 ROUTE UTAMA (ANTI CRASH)
 app.get("/", (req, res) => {
-  const files = fs.readdirSync(uploadDir);
+  let files = [];
+
+  try {
+    files = fs.readdirSync(uploadDir);
+  } catch (err) {
+    console.log("Error baca folder:", err);
+  }
 
   let list = files.map(file => {
     return `
@@ -61,16 +66,22 @@ app.post("/upload", upload.single("file"), (req, res) => {
   res.redirect("/");
 });
 
-// hapus
+// delete
 app.post("/delete", (req, res) => {
   const filePath = path.join(uploadDir, req.body.filename);
-  if (fs.existsSync(filePath)) {
-    fs.unlinkSync(filePath);
+
+  try {
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+  } catch (err) {
+    console.log("Error hapus:", err);
   }
+
   res.redirect("/");
 });
 
-// 🔥 WAJIB BUAT RAILWAY
+// 🔥 PORT RAILWAY
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
