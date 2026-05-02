@@ -3,162 +3,166 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Web Penyimpanan Tugas</title>
+<title>Website Penyimpanan Tugas</title>
 
 <style>
-body {
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: Arial, sans-serif;
-  background: #0b0f0c;
+}
+
+/* BACKGROUND */
+body {
+  background: url('background.jpg') no-repeat center center/cover;
   color: white;
+}
+
+/* OVERLAY */
+.overlay {
+  background: rgba(0,0,0,0.7);
+  min-height: 100vh;
+  padding: 30px;
 }
 
 /* HEADER */
 .header {
-  display: flex;
-  justify-content: space-between;
-  padding: 15px 30px;
-  background: rgba(0,0,0,0.7);
-  position: sticky;
-  top: 0;
+  text-align: center;
+  margin-bottom: 40px;
 }
 
-.header h2 {
-  color: #00ff88;
-}
-
-.nav a {
-  color: white;
-  margin-left: 20px;
-  text-decoration: none;
-}
-
-/* HERO */
-.hero {
-  display: flex;
-  padding: 40px;
-  background: linear-gradient(to right, #001a0f, #000);
-}
-
-.hero img {
-  width: 400px;
-}
-
-.hero-text {
-  margin-left: 40px;
-}
-
-.hero-text h1 {
+.header h1 {
   font-size: 40px;
+  color: #00ff99;
 }
 
-.hero-text span {
-  color: #00ff88;
+.header p {
+  margin-top: 10px;
+  font-size: 18px;
 }
 
-/* CARD */
-.card {
-  background: rgba(0,255,136,0.1);
+/* PROFILE */
+.profile {
+  background: rgba(0,255,150,0.15);
   padding: 20px;
   border-radius: 10px;
-  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.profile h2 {
+  font-size: 28px;
+}
+
+.profile p {
+  font-size: 18px;
+}
+
+/* SECTION */
+.section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.section img {
+  width: 250px;
+}
+
+/* MOTIVASI */
+.quote {
+  background: rgba(0,255,150,0.2);
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+/* NAMA PENULIS */
+.author {
+  margin-top: 15px;
+  font-style: italic;
+  color: #00ff99;
+  text-align: right;
 }
 
 /* UPLOAD */
 .upload {
-  border: 2px dashed #00ff88;
+  background: rgba(0,255,150,0.15);
   padding: 20px;
-  text-align: center;
-  margin-top: 20px;
+  border-radius: 10px;
 }
 
 button {
   padding: 10px 20px;
-  background: #00ff88;
+  background: #00ff99;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-/* TABLE */
-table {
-  width: 100%;
-  margin-top: 20px;
-  border-collapse: collapse;
-}
+/* RESPONSIVE */
+@media(max-width:768px){
+  .header h1 {
+    font-size: 26px;
+  }
 
-th, td {
-  padding: 10px;
-  border-bottom: 1px solid #333;
-}
+  .section {
+    flex-direction: column;
+    text-align: center;
+  }
 
-th {
-  color: #00ff88;
-}
+  .section img {
+    width: 180px;
+  }
 
-/* FOOTER */
-.footer {
-  text-align: center;
-  padding: 20px;
-  margin-top: 30px;
-  background: #000;
+  .author {
+    text-align: center;
+  }
 }
 </style>
+
 </head>
 
 <body>
 
-<div class="header">
-  <h2>🏀 Web Penyimpanan Tugas</h2>
-  <div class="nav">
-    <a href="#">Beranda</a>
-    <a href="#">Upload</a>
-    <a href="#">Daftar</a>
-    <a href="#">Tentang</a>
+<div class="overlay">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>WEBSITE PENYIMPANAN TUGAS</h1>
+    <p>Simpan, Kelola, dan Akses Tugas dengan Mudah</p>
   </div>
-</div>
 
-<div class="hero">
-  <img src="https://cdn.nba.com/headshots/nba/latest/1040x760/203507.png">
-
-  <div class="hero-text">
-    <h1>WEBSITE <br><span>PENYIMPANAN TUGAS</span></h1>
-    <p>"Disiplin adalah jembatan antara tujuan dan pencapaian"</p>
-
-    <div class="card">
-      <p>Nama: Naufal Fawwaz Firdausi</p>
-      <p>NIM: 2403010190</p>
-      <p>Fakultas: Teknik Informatika</p>
-    </div>
-
-    <div class="upload">
-      <p>Upload File</p>
-      <input type="file"><br><br>
-      <button>Upload</button>
-    </div>
-
-    <table>
-      <tr>
-        <th>No</th>
-        <th>Nama File</th>
-        <th>Ukuran</th>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Tugas Web.pdf</td>
-        <td>1.2MB</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Laporan.docx</td>
-        <td>2MB</td>
-      </tr>
-    </table>
-
+  <!-- PROFILE -->
+  <div class="profile">
+    <h2>👤 Naufal Fawwaz Firdausi</h2>
+    <p>NIM: 2403010190</p>
+    <p>Fakultas: Teknik Informatika</p>
   </div>
-</div>
 
-<div class="footer">
-  © 2024 Naufal - Teknik Informatika
+  <!-- GIANNIS + MOTIVASI -->
+  <div class="section">
+    <img src="giannis.png" alt="Giannis">
+
+    <div class="quote">
+      “Giannis, Messi, Ronaldo sama-sama butuh makan ketika lapar, sama-sama butuh tidur ketika ngantuk. Tetapi mereka bisa menjadi manusia spesial di dunia ini. Kenapa kita nggak bisa, sedangkan kita sama-sama manusia yang ketika lahir tidak bisa apa-apa. Yang memberikan semua itu bukanlah takdir, tapi perjuangan.”
+
+      <div class="author">
+        — By Naufal Fawwaz Firdausi
+      </div>
+    </div>
+  </div>
+
+  <!-- UPLOAD -->
+  <div class="upload">
+    <h3>Upload Tugas</h3>
+    <input type="file">
+    <br><br>
+    <button>Upload</button>
+  </div>
+
 </div>
 
 </body>
