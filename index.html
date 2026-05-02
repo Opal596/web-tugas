@@ -15,7 +15,8 @@
 
 /* BACKGROUND */
 body {
-  background: url('background.png') no-repeat center center/cover;
+  background: url('./background.png') no-repeat center center;
+  background-size: cover;
   color: white;
 }
 
@@ -35,10 +36,10 @@ body {
 .header h1 {
   font-size: 40px;
   color: #00ff99;
+  letter-spacing: 2px;
 }
 
 .header p {
-  margin-top: 10px;
   font-size: 18px;
 }
 
@@ -48,10 +49,11 @@ body {
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 40px;
+  text-align: center;
 }
 
 .profile h2 {
-  font-size: 28px;
+  font-size: 30px;
 }
 
 .profile p {
@@ -67,6 +69,7 @@ body {
   flex-wrap: wrap;
 }
 
+/* GAMBAR GIANNIS */
 .section img {
   width: 250px;
 }
@@ -79,7 +82,7 @@ body {
   font-size: 16px;
 }
 
-/* NAMA PENULIS */
+/* AUTHOR */
 .author {
   margin-top: 15px;
   font-style: italic;
@@ -92,6 +95,7 @@ body {
   background: rgba(0,255,150,0.15);
   padding: 20px;
   border-radius: 10px;
+  text-align: center;
 }
 
 button {
@@ -104,6 +108,10 @@ button {
 
 /* RESPONSIVE */
 @media(max-width:768px){
+  body {
+    background-position: center;
+  }
+
   .header h1 {
     font-size: 26px;
   }
@@ -144,7 +152,7 @@ button {
 
   <!-- GIANNIS + MOTIVASI -->
   <div class="section">
-    <img src="giannis.png" alt="Giannis">
+    <img src="./giannis.png" alt="Giannis">
 
     <div class="quote">
       “Giannis, Messi, Ronaldo sama-sama butuh makan ketika lapar, sama-sama butuh tidur ketika ngantuk. Tetapi mereka bisa menjadi manusia spesial di dunia ini. Kenapa kita nggak bisa, sedangkan kita sama-sama manusia yang ketika lahir tidak bisa apa-apa. Yang memberikan semua itu bukanlah takdir, tapi perjuangan.”
