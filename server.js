@@ -5,13 +5,13 @@ const path = require("path");
 
 const app = express();
 
-// pastikan folder uploads ada
+// 🔥 pastikan folder uploads ada (penting buat Railway)
 const uploadDir = "uploads";
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
 
-// setup upload
+// setup multer
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, uploadDir);
@@ -28,7 +28,7 @@ app.use(express.static(__dirname));
 app.use("/uploads", express.static("uploads"));
 app.use(express.urlencoded({ extended: true }));
 
-// halaman utama
+// 🔥 ROUTE UTAMA (biar Railway nggak error)
 app.get("/", (req, res) => {
   const files = fs.readdirSync(uploadDir);
 
@@ -56,23 +56,21 @@ app.get("/", (req, res) => {
   `);
 });
 
-// upload file
+// upload
 app.post("/upload", upload.single("file"), (req, res) => {
   res.redirect("/");
 });
 
-// hapus file
+// hapus
 app.post("/delete", (req, res) => {
   const filePath = path.join(uploadDir, req.body.filename);
-
   if (fs.existsSync(filePath)) {
     fs.unlinkSync(filePath);
   }
-
   res.redirect("/");
 });
 
-// 🔥 WAJIB UNTUK RAILWAY (PALING BAWAH)
+// 🔥 WAJIB BUAT RAILWAY
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
