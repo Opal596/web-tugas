@@ -1,15 +1,16 @@
 const express = require("express");
 const multer = require("multer");
 const fs = require("fs");
+const path = require("path");
 
 const app = express();
 
-// ================== BUAT FOLDER UPLOAD ==================
+// pastikan folder uploads ada
 if (!fs.existsSync("uploads")) {
   fs.mkdirSync("uploads");
 }
 
-// ================== CONFIG UPLOAD ==================
+// config upload
 const storage = multer.diskStorage({
   destination: "uploads/",
   filename: (req, file, cb) => {
@@ -19,11 +20,26 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// biar file bisa diakses
 app.use(express.static("uploads"));
 
-// ================== HALAMAN UTAMA ==================
 app.get("/", (req, res) => {
+
+  let files = fs.readdirSync("uploads");
+  let list = "";
+
+  files.forEach((file, index) => {
+    list += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${file}</td>
+        <td>
+          <a href="/${file}" target="_blank">Lihat</a> |
+          <a href="/delete/${file}" onclick="return confirm('Hapus file?')">Hapus</a>
+        </td>
+      </tr>
+    `;
+  });
+
   res.send(`
   <html>
   <head>
@@ -34,17 +50,30 @@ app.get("/", (req, res) => {
         font-family: Arial;
         color: white;
       }
+
+      /* BACKGROUND BASKET CLEAN */
       .hero {
-        background: url("https://images.unsplash.com/photo-1504450758481-7338eba7524a") no-repeat center center;
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
+        url("https://images.unsplash.com/photo-1546519638-68e109498ffc") no-repeat center;
         background-size: cover;
         min-height: 100vh;
       }
+
       .overlay {
-        background: rgba(0,0,0,0.6);
-        min-height: 100vh;
         padding: 30px;
       }
-      h1 { color: #00ff99; }
+
+      h1 {
+        color: #00ff99;
+      }
+
+      .identity {
+        background: rgba(0,0,0,0.5);
+        padding: 15px;
+        border-radius: 10px;
+        width: fit-content;
+      }
+
       .box {
         background: rgba(0,255,100,0.1);
         padding: 20px;
@@ -52,6 +81,18 @@ app.get("/", (req, res) => {
         margin: 20px auto;
         width: 80%;
       }
+
+      table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+      }
+
+      td, th {
+        padding: 10px;
+        border-bottom: 1px solid #444;
+      }
+
       button {
         background: #00ff99;
         border: none;
@@ -59,6 +100,11 @@ app.get("/", (req, res) => {
         border-radius: 10px;
         cursor: pointer;
       }
+
+      a {
+        color: #00ff99;
+      }
+
     </style>
   </head>
 
@@ -68,7 +114,11 @@ app.get("/", (req, res) => {
 
         <h1>WEBSITE PENYIMPANAN TUGAS</h1>
 
-        <p>Nama: Naufal Fawwaz Firdausi</p>
+        <div class="identity">
+          <p><b>Nama:</b> Naufal Fawwaz Firdausi</p>
+          <p><b>NIM:</b> 2403010190</p>
+          <p><b>Fakultas:</b> Teknik Informatika</p>
+        </div>
 
         <div class="box">
           <h2>Upload File</h2>
@@ -79,6 +129,18 @@ app.get("/", (req, res) => {
           </form>
         </div>
 
+        <div class="box">
+          <h2>Daftar File</h2>
+          <table>
+            <tr>
+              <th>No</th>
+              <th>Nama File</th>
+              <th>Aksi</th>
+            </tr>
+            ${list}
+          </table>
+        </div>
+
       </div>
     </div>
   </body>
@@ -86,14 +148,20 @@ app.get("/", (req, res) => {
   `);
 });
 
-// ================== UPLOAD ==================
 app.post("/upload", upload.single("file"), (req, res) => {
   res.redirect("/");
 });
 
-// ================== PORT ==================
-const PORT = process.env.PORT || 3000;
+app.get("/delete/:filename", (req, res) => {
+  const filePath = path.join(__dirname, "uploads", req.params.filename);
 
-app.listen(PORT, () => {
-  console.log("Server jalan di port " + PORT);
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath);
+  }
+
+  res.redirect("/");
+});
+
+app.listen(3000, () => {
+  console.log("Server jalan di http://localhost:3000");
 });

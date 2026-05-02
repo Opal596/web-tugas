@@ -4,44 +4,60 @@
   <title>Web Tugas Naufal</title>
   <style>
     body { margin:0; font-family:Arial; color:white; }
+
     .hero {
-      background:url("https://images.unsplash.com/photo-1504450758481-7338eba7524a") no-repeat center;
-      background-size:cover; min-height:100vh;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
+      url("https://images.unsplash.com/photo-1546519638-68e109498ffc") no-repeat center;
+      background-size: cover;
+      min-height: 100vh;
     }
-    .overlay {
-      background:rgba(0,0,0,0.6);
-      min-height:100vh; padding:30px;
-    }
+
+    .overlay { padding:30px; }
+
     h1 { color:#00ff99; }
+
+    .identity {
+      background: rgba(0,0,0,0.5);
+      padding: 15px;
+      border-radius: 10px;
+      width: fit-content;
+    }
+
     .box {
-      background:rgba(0,255,100,0.1);
-      padding:20px; border-radius:15px;
-      margin:20px auto; width:80%;
+      background: rgba(0,255,100,0.1);
+      padding:20px;
+      border-radius:15px;
+      margin:20px auto;
+      width:80%;
     }
+
     button {
-      background:#00ff99; border:none;
-      padding:10px 20px; border-radius:10px;
-      cursor:pointer;
+      background:#00ff99;
+      border:none;
+      padding:10px 20px;
+      border-radius:10px;
     }
+
   </style>
 </head>
 
 <body>
   <div class="hero">
     <div class="overlay">
+
       <h1>WEBSITE PENYIMPANAN TUGAS</h1>
 
-      <p>Nama: Naufal Fawwaz Firdausi</p>
-      <p>NIM: 2403010190</p>
+      <div class="identity">
+        <p><b>Nama:</b> Naufal Fawwaz Firdausi</p>
+        <p><b>NIM:</b> 2403010190</p>
+        <p><b>Fakultas:</b> Teknik Informatika</p>
+      </div>
 
       <div class="box">
-        <h2>Upload (Simulasi)</h2>
-        <p>File berhasil dipilih (demo saja).</p>
-        <input type="file" />
+        <h2>Upload (Demo)</h2>
+        <input type="file">
         <br><br>
-        <button onclick="alert('Upload berhasil (simulasi)')">
-          Upload
-        </button>
+        <button onclick="alert('Upload berhasil (demo)')">Upload</button>
       </div>
 
     </div>
