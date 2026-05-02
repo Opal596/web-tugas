@@ -1,66 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Web Tugas Naufal</title>
-  <style>
-    body { margin:0; font-family:Arial; color:white; }
 
-    .hero {
-      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
-      url("https://images.unsplash.com/photo-1546519638-68e109498ffc") no-repeat center;
-      background-size: cover;
-      min-height: 100vh;
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: white;
+      background: url('https://images.unsplash.com/photo-1519861531473-9200262188bf')
+      no-repeat center center/cover;
     }
 
-    .overlay { padding:30px; }
+    .overlay {
+      background: rgba(0,0,0,0.6);
+      min-height: 100vh;
+      padding: 20px;
+    }
 
-    h1 { color:#00ff99; }
+    h1 {
+      color: #00ffcc;
+    }
 
-    .identity {
-      background: rgba(0,0,0,0.5);
+    .card {
+      background: rgba(0,0,0,0.6);
       padding: 15px;
       border-radius: 10px;
       width: fit-content;
+      margin-bottom: 20px;
     }
 
-    .box {
-      background: rgba(0,255,100,0.1);
-      padding:20px;
-      border-radius:15px;
-      margin:20px auto;
-      width:80%;
+    .upload-box {
+      background: linear-gradient(90deg, #00ffcc, #00aa66);
+      padding: 20px;
+      border-radius: 10px;
+      color: black;
+      max-width: 400px;
     }
 
     button {
-      background:#00ff99;
-      border:none;
-      padding:10px 20px;
-      border-radius:10px;
+      margin-top: 10px;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      background: #00ffcc;
+      cursor: pointer;
+    }
+
+    /* 🔥 SECTION PEMAIN */
+    .players {
+      margin-top: 50px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .player-card {
+      background: rgba(0,0,0,0.7);
+      border-radius: 15px;
+      overflow: hidden;
+      max-width: 250px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .player-card:hover {
+      transform: scale(1.05);
+    }
+
+    .player-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .player-card p {
+      padding: 10px;
+      font-style: italic;
+      font-size: 14px;
+    }
+
+    /* 🔥 RESPONSIVE HP */
+    @media (max-width: 768px) {
+      .players {
+        flex-direction: column;
+        align-items: center;
+      }
     }
 
   </style>
 </head>
 
 <body>
-  <div class="hero">
-    <div class="overlay">
 
-      <h1>WEBSITE PENYIMPANAN TUGAS</h1>
+<div class="overlay">
 
-      <div class="identity">
-        <p><b>Nama:</b> Naufal Fawwaz Firdausi</p>
-        <p><b>NIM:</b> 2403010190</p>
-        <p><b>Fakultas:</b> Teknik Informatika</p>
-      </div>
+  <h1>WEBSITE PENYIMPANAN TUGAS</h1>
 
-      <div class="box">
-        <h2>Upload (Demo)</h2>
-        <input type="file">
-        <br><br>
-        <button onclick="alert('Upload berhasil (demo)')">Upload</button>
-      </div>
-
-    </div>
+  <div class="card">
+    <p>Nama: Naufal Fawwaz Firdausi</p>
+    <p>NIM: 2403010190</p>
+    <p>Fakultas: Teknik Informatika</p>
   </div>
+
+  <div class="upload-box">
+    <h3>Upload (Demo)</h3>
+    <input type="file"><br>
+    <button>Upload</button>
+  </div>
+
+  <!-- 🔥 BAGIAN TAMBAHAN -->
+  <div class="players">
+
+    <div class="player-card">
+      <img src="https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png">
+      <p>"You have to be able to accept failure to get better." - LeBron James</p>
+    </div>
+
+    <div class="player-card">
+      <img src="https://cdn.nba.com/headshots/nba/latest/1040x760/203507.png">
+      <p>"I want to keep getting better, keep growing." - Giannis Antetokounmpo</p>
+    </div>
+
+  </div>
+
+</div>
+
 </body>
 </html>
